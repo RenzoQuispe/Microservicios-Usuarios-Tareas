@@ -1,7 +1,7 @@
 # ConfigMap con init.sql para base de datos de usuarios
-resource "kubernetes_config_map" "users_mysql_init_sql" {
+resource "kubernetes_config_map" "usuarios_mysql_init_sql" {
   metadata {
-    name = "users-mysql-init-sql"
+    name = "usuarios-mysql-init-sql"
   }
 
   data = {
@@ -22,11 +22,11 @@ resource "kubernetes_config_map" "users_mysql_init_sql" {
   }
 }
 # Deployment para MySQL (base de datos de usuarios)
-resource "kubernetes_deployment" "mysql_users_db" {
+resource "kubernetes_deployment" "mysql_usuarios_db" {
   metadata {
-    name = "mysql-users-db"
+    name = "mysql-usuarios-db"
     labels = {
-      app = "mysql-users"
+      app = "mysql-usuarios"
     }
   }
 
@@ -35,14 +35,14 @@ resource "kubernetes_deployment" "mysql_users_db" {
 
     selector {
       match_labels = {
-        app = "mysql-users"
+        app = "mysql-usuarios"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = "mysql-users"
+          app = "mysql-usuarios"
         }
       }
 
@@ -80,7 +80,7 @@ resource "kubernetes_deployment" "mysql_users_db" {
         volume {
           name = "init-sql"
           config_map {
-            name = kubernetes_config_map.users_mysql_init_sql.metadata[0].name
+            name = kubernetes_config_map.usuarios_mysql_init_sql.metadata[0].name
             items {
               key  = "init.sql"
               path = "init.sql"
@@ -97,14 +97,14 @@ resource "kubernetes_deployment" "mysql_users_db" {
   }
 }
 # Service para MySQL (base de datos de usuarios)
-resource "kubernetes_service" "mysql_users_db" {
+resource "kubernetes_service" "mysql_usuarios_db" {
   metadata {
-    name = "mysql-users-db"
+    name = "mysql-usuarios-db"
   }
 
   spec {
     selector = {
-      app = "mysql-users"
+      app = "mysql-usuarios"
     }
 
     port {
@@ -115,3 +115,4 @@ resource "kubernetes_service" "mysql_users_db" {
     cluster_ip = "None"
   }
 }
+# kubectl exec -it <mysql-pod-name> -- bash
