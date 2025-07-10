@@ -1,0 +1,36 @@
+services:
+
+  service-usuarios:
+    build: ./service-usuarios
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - DB_HOST=usuarios-db
+      - DB_USER=adminserviceusuarios
+      - DB_PASS=admin123
+      - DB_NAME=usuarios_db
+    depends_on:
+      usuarios-db:
+        condition: service_healthy
+
+  usuarios-db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: usuarios_db
+      MYSQL_USER: adminserviceusuarios
+      MYSQL_PASSWORD: admin123
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
