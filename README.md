@@ -1,22 +1,22 @@
 # Microservicios Usuarios-Tareas
 
-## Diagrama del sistema
+## Diagrama del proyecto
 ```
-                             ┌──────────────────────┐
-                             │    Cliente (Postman) │
-                             └──────────┬───────────┘
-                                        │
-             ┌──────────────────────────┼────────────────────────────┐
-             │                          │                            │
- ┌───────────────────────┐   ┌──────────────────────┐     ┌──────────────────────┐
- │ microservicio-usuarios│   │ microservicio-tareas │     │  docker-compose.yml  │
- │  (Puerto 3001)        │   │   (Puerto 3002)      │     │ (orquestador local)  │
- └─────────┬─────────────┘   └────────────┬─────────┘     └──────────────────────┘
-           │                              │
-    ┌──────┴──────┐                ┌──────┴──────┐
-    │   MySQL     │                │   MongoDB   │
-    │ usuarios_db │                │ tareas_db   │
-    └─────────────┘                └─────────────┘
+                         --------------------------
+                         |    NGINX / FRONTEND    |
+                         --------------------------
+                                    |
+                                    v
+                ------------------------      -------------------------
+                |   service-usuarios   |      |     service-tareas    |
+                |   Node.js - Express  |      |   Flask - Python      |
+                ------------------------      -------------------------
+                            |                             |
+                            v                             v
+                ------------------------      -------------------------
+                |    usuarios-db       |      |      tareas-db        |
+                |      MySQL           |      |      MongoDB          |
+                ------------------------      -------------------------
 
 ```
 ## Iniciar con Docker
