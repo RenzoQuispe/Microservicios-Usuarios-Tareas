@@ -1,6 +1,6 @@
-## Microservicios Usuarios-Tareas
+# Microservicios Usuarios-Tareas
 
-### Diagrama del sistema
+## Diagrama del sistema
 ```
                              ┌──────────────────────┐
                              │    Cliente (Postman) │
@@ -18,4 +18,9 @@
     │ usuarios_db │                │ tareas_db   │
     └─────────────┘                └─────────────┘
 
+```
+## Iniciar con Docker
+
+```
+docker-compose up --build
 ```
