@@ -1,5 +1,5 @@
 services:
-
+  # Microservicio service-usuarios
   service-usuarios:
     build: ./service-usuarios
     ports:
@@ -13,7 +13,7 @@ services:
     depends_on:
       usuarios-db:
         condition: service_healthy
-
+  # base de datos mysql para service-usuarios
   usuarios-db:
     image: mysql:8
     restart: always
@@ -32,5 +32,34 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
+  # Microservicio service-tareas
+  service-tareas:
+    build: ./service-tareas
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - DB_HOST=tareas-db
+      - DB_PORT=27017
+      - DB_NAME=tareas_db
+    depends_on:
+      tareas-db:
+        condition: service_healthy
+
+  # base de datos para service-tareas
+  tareas-db:
+    image: mongo:6
+    restart: always
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh tareas-db:27017/tareas_db --quiet"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - mongo-data:/data/db
+
 volumes:
   mysql-data:
+  mongo-data:
