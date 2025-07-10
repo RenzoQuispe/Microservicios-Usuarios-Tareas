@@ -1,9 +1,8 @@
-import express from 'express'
+import express, { Request, Response } from 'express';
 import { testDBConnection } from './database';
-import { Request, Response, NextFunction } from "express";
 
-const app = express()
-const PORT = process.env.PORT
+const app = express();
+const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 
@@ -11,8 +10,12 @@ app.get('/', (req: Request, res: Response) => {
   res.status(200).send('Servicio de usuarios activo');
 });
 
-
-app.listen(PORT, async () => {
-  console.log(`User-service ejecutandose en el puerto  ${PORT}`);
+async function iniciarServer() {
   await testDBConnection();
-})
+
+  app.listen(PORT, () => {
+    console.log(`User-service ejecutándose en el puerto ${PORT}`);
+  });
+}
+
+iniciarServer();
