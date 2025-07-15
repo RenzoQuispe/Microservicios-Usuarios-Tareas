@@ -89,7 +89,7 @@ export const logout = async (req: Request, res: Response): Promise<void> => {
             expires: new Date(0),
             maxAge: 0
         });
-        res.status(200).json({ message: "Cerró cesión correactamente :D" });
+        res.status(200).json({ message: "Cerró cesión correctamente :D" });
     } catch (err) {
         console.error('Error logout', err);
         res.status(500).json({ error: "Error interno del servidor" });

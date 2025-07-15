@@ -3,7 +3,7 @@ from flask import request, jsonify
 import jwt
 import os
 
-JWT_SECRET = os.getenv("JWT_SECRET", "default_secret")
+JWT_SECRET = os.getenv("JWT_SECRET")
 
 def token_required(f):
     @wraps(f)

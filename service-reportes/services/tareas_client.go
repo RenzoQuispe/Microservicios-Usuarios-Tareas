@@ -11,18 +11,15 @@ import (
 )
 
 func ObtenerTareasDelUsuario(token string) ([]models.Tarea, error) {
-	log.Println("1")
+
 	url := os.Getenv("TAREAS_SERVICE_URL")
-	if url == "" {
-		url = "http://localhost:5001/tareas"
-	}
-	log.Println("2")
+
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Set("Cookie", "jwt_=" + token)
-	log.Println("3")
+
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {

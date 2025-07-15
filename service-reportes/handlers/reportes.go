@@ -32,6 +32,17 @@ func GenerarReporte(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if len(tareas) == 0 {
+		reporte := Reporte{
+			TotalTareas:   0,
+			ListaResumen:  []ResumenTarea{},
+			MesProductivo: "Sin datos",
+		}
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(reporte)
+		return
+	}
+
 	// Crear resumen y contar tareas por mes
 	resumen := []ResumenTarea{}
 	mesConteo := map[string]int{}
