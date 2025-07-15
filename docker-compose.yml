@@ -45,6 +45,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
+      - ./db/db-tareas/init.js:/docker-entrypoint-initdb.d/init.js:ro
       - mongo-data:/data/db
 
 volumes:
