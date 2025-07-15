@@ -48,6 +48,15 @@ services:
     volumes:
       - ./db/db-tareas/init.js:/docker-entrypoint-initdb.d/init.js:ro
       - mongo-data:/data/db
+  # Microservicio service-reportes
+  service-reportes:
+    build: ./service-reportes
+    ports:
+      - "6001:6001"
+    environment:
+      - PORT=6001
+      - JWT_SECRET=clavesecreta
+      - TAREAS_SERVICE_URL=http://service-tareas:5001/tareas
 
 volumes:
   mysql-data:
