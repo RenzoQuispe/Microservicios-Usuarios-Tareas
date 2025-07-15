@@ -36,6 +36,7 @@ services:
       - DB_HOST=tareas-db
       - DB_PORT=27017
       - DB_NAME=tareas_db
+      - JWT_SECRET=clavesecreta # la misma que service-usuarios/.env
     depends_on:
       - tareas-db
   # base de datos para service-tareas
